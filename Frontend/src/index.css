@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+i {
+  cursor: pointer;
+}
+.toastBody {
+  font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+  color: #ffffff; /* #10171D */
+  font-size: 0.875rem;
+}
+.right-container {
+  background-image: url("/login.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+@media (min-width: 640px) {
+  .right-container {
+    background-image: none;
+  }
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* button:focus {
+  outline: none;
+} */
+html {
+  overflow-y: scroll;
+}
+/* Hide all scrollbars but keep functionality */
+.scrollbar-hidden-x {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Safari/Chrome */
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
