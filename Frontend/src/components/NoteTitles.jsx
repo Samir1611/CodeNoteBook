@@ -1,6 +1,7 @@
 // Inbox.js
 import { ArrowDownAZ, ArrowUpAZ, Filter, Search } from "lucide-react";
 import { useState } from "react";
+import Newnotemodal from "./Newnotemodal";
 
 const NoteTitles = ({
   ext,
@@ -10,6 +11,8 @@ const NoteTitles = ({
   setDrop,
   setShowMainContent,
   setShowNoteTitles,
+  isModalOpen,
+  setIsModalOpen,
   currentFilter,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -112,10 +115,19 @@ const NoteTitles = ({
             </div>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center h-full">
-            <div className="text-white">No notes</div>
-            <div className="opacity-40 text-white mt-2">Add a new note.</div>
-          </div>
+          <>
+            <div className="flex flex-col items-center justify-center h-full">
+              <div className="text-white">No notes</div>
+              <div className="opacity-40 text-white mt-2">Add a new note.</div>
+
+              <div className=" fixed z-40 right-[78vw]  top-[50vh] sm:right-[60vw] ">
+                <Newnotemodal
+                  isOpen={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                />
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>

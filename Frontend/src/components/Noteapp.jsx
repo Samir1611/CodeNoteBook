@@ -80,6 +80,8 @@ const Noteapp = () => {
           drop={drop}
           setDrop={setDrop}
           currentFilter={currentFilter}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
         />
       </div>
 
@@ -99,6 +101,8 @@ const Noteapp = () => {
             setShowMainContent={setShowMainContent}
             setShowNoteTitles={setShowNoteTitles}
             currentFilter={currentFilter}
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
           />
         </div>
       )}
