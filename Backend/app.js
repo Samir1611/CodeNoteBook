@@ -5,10 +5,13 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
-
+const allowedOrigins = [
+  "http://localhost:5173", // for local dev
+  "https://codenotebookz.netlify.app", // your deployed frontend
+];
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5174",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
