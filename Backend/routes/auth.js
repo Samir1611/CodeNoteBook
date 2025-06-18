@@ -100,26 +100,38 @@ router.post(
   ],
 
   async (req, res) => {
-    let success = false;
     const errorobj = validationResult(req); // returns an object that contains validation errors (if obj empty no error)
     if (!errorobj.isEmpty()) {
       //isEmpty returns true if there are no errors(valid) and false if there are errors.
-      return res.status(400).json({ success, errors: errors.array() });
+      return res.status(400).json({
+        success: false,
+        errors: errors
+          .array()
+          .map((e) => e.msg)
+          .join(", "),
+      });
     }
 
     const { email, password } = req.body;
     try {
       let user = await User.findOne({ email });
       if (!user) {
-        return res
-          .status(400)
-          .json({ success, error: "Please try to login with correct email" });
+        return res.status(400).json({
+          success: false,
+          error: "Please try to login with correct email",
+        });
       }
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
         return res.status(400).json({
-          success,
+          success: false,
           error: "Please try to login with correct password",
+        });
+      }
+      if (!user || !passwordCompare) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid credentials",
         });
       }
       const data = {
@@ -147,8 +159,10 @@ router.post(
           authToken: token,
         });
     } catch (error) {
-      console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      return res.status(500).json({
+        success: false,
+        error: "Service unavailable. Please try again later.",
+      });
     }
   }
 );
@@ -176,10 +190,14 @@ router.post("/logout", (req, res) => {
 });
 router.get("/me", fetchUser, async (req, res) => {
   try {
+    if (!req.user) {
+      return res.json({ success: false });
+    }
     const user = await User.findById(req.user.id).select("-password");
+    if (!user) return res.json({ success: false });
     res.json({ success: true, user });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Server error" });
+    res.json({ success: false });
   }
 });
 

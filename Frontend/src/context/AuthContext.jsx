@@ -29,12 +29,19 @@ export const AuthProvider = ({ children }) => {
         const res = await fetch("http://localhost:5000/auth/me", {
           credentials: "include",
         });
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+
         const json = await res.json();
         if (json.success) {
-          login(json.user); // Pass user data directly
+          setUser(json.user);
+        } else {
+          setUser(null);
         }
       } catch (err) {
-        console.error("Session verification failed:", err);
+        setUser(null);
       } finally {
         setLoading(false);
       }

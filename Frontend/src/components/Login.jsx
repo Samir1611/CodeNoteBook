@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { apiPost } from "../../api";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -19,40 +20,15 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    try {
-      const response = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
+    const json = await apiPost("/auth/login", credentials);
+    setIsLoading(false);
 
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: credentials.email,
-          password: credentials.password,
-        }),
-        credentials: "include",
-      });
-
-      const json = await response.json();
-      setIsLoading(false);
-
-      if (response.ok && json.success) {
-        login(json.user);
-        toast.success("Login Successful!");
-        setTimeout(() => {
-          navigate("/");
-        }, 100);
-
-        console.log("Login successful:", json);
-      } else if (json.errors) {
-        json.errors.forEach((error) => toast.error(error.msg));
-      } else {
-        toast.error(json.error || "Invalid Credentials");
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.error("Login failed:", error);
-      toast.error("An unexpected error occurred. Please try again.");
+    if (json.success) {
+      login(json.user);
+      toast.success("Login Successful!");
+      navigate("/");
+    } else {
+      toast.error(json.error || "Invalid credentials");
     }
   };
 
