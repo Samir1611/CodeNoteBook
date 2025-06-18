@@ -22,8 +22,9 @@ const SignUp = () => {
       toast.error("Passwords do not match!");
       return;
     }
+    const API_BASE = "https://codenotebook-backend.onrender.com";
 
-    const response = await fetch("http://localhost:5000/auth/createuser", {
+    const response = await fetch(`${API_BASE}/auth/createuser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

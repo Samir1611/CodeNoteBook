@@ -13,9 +13,10 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
     setLoading(false);
   };
+  const API_BASE = "https://codenotebook-backend.onrender.com";
 
   const logout = async () => {
-    await fetch("http://localhost:5000/auth/logout", {
+    await fetch(`${API_BASE}/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
@@ -26,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verifySession = async () => {
       try {
-        const res = await fetch("http://localhost:5000/auth/me", {
+        const res = await fetch(`${API_BASE}/auth/me`, {
           credentials: "include",
         });
         if (!res.ok) {

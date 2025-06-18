@@ -4,7 +4,7 @@ import { useAuth } from "../AuthContext";
 //notecontext is created through createcontext()
 const NoteState = (props) => {
   const { authToken } = useAuth();
-  const host = "http://localhost:5000";
+  const host = "https://codenotebook-backend.onrender.com";
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
 
