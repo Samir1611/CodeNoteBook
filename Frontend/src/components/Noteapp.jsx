@@ -30,6 +30,8 @@ const Noteapp = () => {
   const clickedNote = (note) => setclicknote(note._id);
   const [currentFilter, setCurrentFilter] = useState("All Notes");
   const filterNotes = () => {
+    if (!Array.isArray(notes)) return []; // 💡 avoid crashes
+
     if (currentFilter === "All Notes") {
       return notes;
     } else if (currentFilter.startsWith("Status:")) {

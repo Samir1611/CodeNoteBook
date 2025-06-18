@@ -20,7 +20,13 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     // console.log(json);
-    setNotes(json);
+    // setNotes(json);
+    if (Array.isArray(json)) {
+      setNotes(json);
+    } else {
+      console.error("Invalid response (not an array):", json);
+      setNotes([]); // fallback to empty array
+    }
   };
   //add note
   const addNote = async (title, description, tag, status) => {
