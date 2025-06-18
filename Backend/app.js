@@ -18,6 +18,9 @@ app.use(cookieParser()); //access  req.cookie
 import auth from "./routes/auth.js";
 import notes from "./routes/notes.js";
 
+app.get("/api/test", (req, res) => {
+  res.send("Backend is live and working!");
+});
 app.use("/auth", auth);
 app.use("/notes", notes);
 export { app };
