@@ -105,10 +105,7 @@ router.post(
       //isEmpty returns true if there are no errors(valid) and false if there are errors.
       return res.status(400).json({
         success: false,
-        errors: errors
-          .array()
-          .map((e) => e.msg)
-          .join(", "),
+        errors: errors.array(),
       });
     }
 
