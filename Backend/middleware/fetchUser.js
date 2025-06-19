@@ -16,6 +16,6 @@ const fetchUser = (req, res, next) => {
   } catch (error) {
     res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
-  next();
+  // next();
 };
 export default fetchUser;
