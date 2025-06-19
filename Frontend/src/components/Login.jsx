@@ -29,7 +29,11 @@ const Login = () => {
         toast.success("Login Successful!");
         navigate("/");
       } else {
-        toast.error(json.error || "Invalid credentials");
+        if (json.errors && Array.isArray(json.errors)) {
+          json.errors.forEach((err) => toast.error(err.msg));
+        } else {
+          toast.error(json.error || json.message || "Invalid credentials");
+        }
       }
     } catch (err) {
       setIsLoading(false);

@@ -103,9 +103,10 @@ router.post(
     const errorobj = validationResult(req); // returns an object that contains validation errors (if obj empty no error)
     if (!errorobj.isEmpty()) {
       //isEmpty returns true if there are no errors(valid) and false if there are errors.
-      return res.status(400).json({
+      return res.status(200).json({
         success: false,
         errors: errorobj.array(),
+        message: "Validation failed",
       });
     }
 
