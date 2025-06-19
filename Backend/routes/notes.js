@@ -6,9 +6,6 @@ import { body, validationResult } from "express-validator";
 
 //Route 1: Get all notes using: GET Login required.
 router.get("/fetchallnotes", fetchUser, async (req, res) => {
-  if (!req.user) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
   try {
     if (!req.user) return res.status(401).json({ error: "Unauthorized" });
 
