@@ -7,7 +7,6 @@ const fetchUser = (req, res, next) => {
   if (!token) {
     req.user = null;
     return next();
-    // return res.status(200).json({ error: "Unauthorized: No token provided" });
   }
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET);
