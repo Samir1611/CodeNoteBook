@@ -116,7 +116,7 @@ const Sidebar = ({
 
     if (key === "Notebooks") {
       setIsModalOpen(true);
-    }
+    } else setIsModalOpen(false);
     if (window.innerWidth < 640) {
       setExt(false);
     }
