@@ -18,11 +18,22 @@ const NewnotemodalforTag = ({
     tag: "",
     status: "",
   });
+  const [isCreating, setIsCreating] = useState(false);
+
   if (!isOpen) return null;
   const handleClick = (e) => {
+    if (isCreating) return;
+    setIsCreating(true);
+
     e.preventDefault();
-    editNote(noteid, notetitle, notedescription, note.tag, noteStatus);
-    onClose();
+    try {
+      editNote(noteid, notetitle, notedescription, note.tag, noteStatus);
+      onClose();
+    } catch (error) {
+      console.error("Error creating tag:", err);
+    } finally {
+      setIsCreating(false);
+    }
   };
   const onchange = (e) => {
     setnote({ ...note, [e.target.name]: e.target.value }); //any changes set name to value in note
@@ -59,7 +70,7 @@ const NewnotemodalforTag = ({
               note.tag.length < 3 ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={handleClick}
-            disabled={note.tag.length < 3}
+            disabled={note.tag.length < 3 && isCreating}
           >
             Create
           </button>

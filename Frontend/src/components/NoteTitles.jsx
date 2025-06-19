@@ -40,22 +40,6 @@ const NoteTitles = ({
       return isDateSortAsc ? dateA - dateB : dateB - dateA;
     }
   });
-  const modalRef = useRef(null);
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setIsModalOpen(false);
-      }
-    };
-
-    if (isModalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isModalOpen]);
 
   return (
     <div
@@ -131,10 +115,7 @@ const NoteTitles = ({
                 </div>
               </div>
             ))}
-            <div
-              ref={modalRef}
-              className=" fixed z-40 right-[78vw]  top-[50vh] sm:right-[60vw] "
-            >
+            <div className=" fixed z-40 right-[78vw]  top-[50vh] sm:right-[60vw] ">
               <Newnotemodal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
@@ -147,10 +128,7 @@ const NoteTitles = ({
               <div className="text-white">No notes</div>
               <div className="opacity-40 text-white mt-2">Add a new note.</div>
 
-              <div
-                ref={modalRef}
-                className=" fixed z-40 right-[78vw]  top-[50vh] sm:right-[60vw] "
-              >
+              <div className=" fixed z-40 right-[78vw]  top-[50vh] sm:right-[60vw] ">
                 <Newnotemodal
                   isOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}

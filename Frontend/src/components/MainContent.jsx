@@ -18,6 +18,11 @@ const MainContent = ({
 }) => {
   const selectedNote = notes.find((note) => note._id === clicknote);
   const [status, setStatus] = useState("Active");
+  const [inputTitle, setInputTitle] = useState(selectedNote?.title || "");
+
+  useEffect(() => {
+    setInputTitle(selectedNote?.title || "");
+  }, [selectedNote?._id]);
   // const [currentNoteId, setCurrentNoteId] = useState(null); // Tracks the current note ID
   const dropdownRef = useRef(null);
 
@@ -77,16 +82,28 @@ const MainContent = ({
               <input
                 type="text"
                 className="bg-transparent outline-none w-full break-words resize-none max-h-[4.2vh] truncate overflow-hidden whitespace-nowrap  scrollbar-hidden"
-                value={selectedNote.title}
+                value={inputTitle}
                 onChange={(e) => {
-                  const newTitle = e.target.value;
-                  if (newTitle.length >= 4 || newTitle.length === 0) {
-                    editTitle(newTitle);
+                  const newValue = e.target.value;
+                  if (
+                    newValue.length >= 4 ||
+                    newValue.length >= inputTitle.length
+                  ) {
+                    setInputTitle(newValue);
+                  }
+                }}
+                onBlur={() => {
+                  if (
+                    inputTitle.trim().length >= 4 &&
+                    inputTitle !== selectedNote.title
+                  ) {
+                    editTitle(inputTitle.trim());
                   }
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
+                    e.target.blur(); // triggers onBlur to save
                   }
                 }}
               />

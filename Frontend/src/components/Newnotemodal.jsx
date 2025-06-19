@@ -11,12 +11,22 @@ const Newnotemodal = ({ isOpen, onClose }) => {
     tag: "",
     status: "Active",
   });
+  const [isCreating, setIsCreating] = useState(false);
   if (!isOpen) return null;
+
   const handleClick = async (e) => {
+    if (isCreating) return;
+    setIsCreating(true);
     e.preventDefault();
-    await addNote(note.title, "", "", note.status); // Only add title initially
-    setnote({ title: "", description: "", tag: "", status: "Active" }); // Reset note state
-    onClose();
+    try {
+      await addNote(note.title, "", "", note.status); // Only add title initially
+      setnote({ title: "", description: "", tag: "", status: "Active" }); // Reset note state
+      onClose();
+    } catch (error) {
+      console.error("Error creating note:", err);
+    } finally {
+      setIsCreating(false);
+    }
   };
   const onchange = (e) => {
     setnote({ ...note, [e.target.name]: e.target.value }); //any changes set name to value in note
@@ -58,7 +68,7 @@ const Newnotemodal = ({ isOpen, onClose }) => {
               note.title.length < 4 ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={handleClick}
-            disabled={note.title.length < 3}
+            disabled={note.title.length < 3 && isCreating}
           >
             Create
           </button>

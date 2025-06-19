@@ -110,6 +110,7 @@ const Sidebar = ({
       ...prevSelect,
       [key]: !prevSelect[key],
     }));
+
     if (key === "Notebooks") {
       setIsModalOpen(true);
       if (window.innerWidth < 640) {
@@ -160,6 +161,7 @@ const Sidebar = ({
                   if (f.title === "All Notes") {
                     handleItemClick(f.title);
                     setCurrentFilter("All Notes");
+                    setIsModalOpen(false);
                     onAllNotesClick && onAllNotesClick();
                     if (window.innerWidth < 640) {
                       setExt(false);
@@ -168,6 +170,8 @@ const Sidebar = ({
                     setIsModalOpen(true);
                   } else if (f.title === "Status") {
                     toggleSelect(f.title);
+                    setIsModalOpen(false);
+
                     onAllNotesClick && onAllNotesClick();
                     if (window.innerWidth < 640) {
                       setExt(false);
@@ -175,6 +179,8 @@ const Sidebar = ({
                     setExt(true);
                   } else if (f.title === "Tags") {
                     toggleSelect(f.title);
+                    setIsModalOpen(false);
+
                     onAllNotesClick && onAllNotesClick();
                     if (window.innerWidth < 640) {
                       setExt(false);
