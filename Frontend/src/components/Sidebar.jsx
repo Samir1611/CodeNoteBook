@@ -90,19 +90,22 @@ const Sidebar = ({
   };
 
   const handleItemClick = (title, parentTitle) => {
-    if (title === "All Notes") {
-      setCurrentFilter("All Notes");
-    } else if (parentTitle === "Status") {
-      setCurrentFilter(`Status: ${title}`);
+    let newFilter = "All Notes";
+
+    if (parentTitle === "Status") {
+      newFilter = `Status: ${title}`;
     } else if (parentTitle === "Tags") {
-      setCurrentFilter(`Tag: ${title}`);
+      newFilter = `Tag: ${title}`;
     } else {
-      setCurrentFilter(title);
+      newFilter = title;
     }
+
+    setCurrentFilter(newFilter);
     if (window.innerWidth < 640) {
       setExt(false);
     }
-    console.log("Tag Clicked:", title, "Parent Title:", parentTitle);
+    // Force re-render of NoteTitles
+    onAllNotesClick && onAllNotesClick();
   };
   const [select, setSelect] = useState({ Status: false, Tags: false });
   const toggleSelect = (key) => {
@@ -113,9 +116,9 @@ const Sidebar = ({
 
     if (key === "Notebooks") {
       setIsModalOpen(true);
-      if (window.innerWidth < 640) {
-        setExt(false);
-      }
+    }
+    if (window.innerWidth < 640) {
+      setExt(false);
     }
   };
   return (

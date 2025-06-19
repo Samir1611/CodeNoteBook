@@ -32,16 +32,18 @@ const Noteapp = () => {
   const filterNotes = () => {
     if (!Array.isArray(notes)) return []; // 💡 avoid crashes
 
-    if (currentFilter === "All Notes") {
-      return notes;
-    } else if (currentFilter.startsWith("Status:")) {
-      const status = currentFilter.replace("Status: ", "");
-      return notes.filter((note) => note.status === status);
-    } else if (currentFilter.startsWith("Tag:")) {
-      const tag = currentFilter.replace("Tag: ", "");
-      return notes.filter((note) => note.tag === tag);
+    switch (true) {
+      case currentFilter === "All Notes":
+        return notes;
+      case currentFilter.includes("Status:"):
+        const status = currentFilter.split(": ")[1];
+        return notes.filter((note) => note.status === status);
+      case currentFilter.includes("Tag:"):
+        const tag = currentFilter.split(": ")[1];
+        return notes.filter((note) => note.tag === tag);
+      default:
+        return notes;
     }
-    return notes;
   };
   useEffect(() => {
     const handleKeyDown = (e) => {
