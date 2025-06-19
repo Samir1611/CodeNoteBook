@@ -152,6 +152,7 @@ router.post(
           message: "Logged in successfully",
           user: {
             id: user.id,
+            email: user.email,
             name: user.name,
           },
           token: token,
@@ -190,7 +191,11 @@ router.get("/me", fetchUser, async (req, res) => {
   if (req.user) {
     res.json({
       success: true,
-      user: req.user,
+      user: {
+        id: req.user.id,
+        email: req.user.email,
+        name: req.user.name,
+      },
       token: req.cookies.token,
     });
   } else {
