@@ -145,7 +145,7 @@ router.post(
           secure: true, // true in production (HTTPS)
           sameSite: "none", // CSRF protection
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-          domain: ".onrender.com",
+          // domain: ".onrender.com",
         })
         .json({
           success: true,
