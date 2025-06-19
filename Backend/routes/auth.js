@@ -31,14 +31,14 @@ router.post(
     const errorobj = validationResult(req); // returns an object that contains validation errors (if obj empty no error)
     if (!errorobj.isEmpty()) {
       //isEmpty returns true if there are no errors(valid) and false if there are errors. ! xa so false ma if chlx
-      return res.send({ success, errors: errorobj.array() }); //valid xaina vane error cause hunu
+      return res.status(200).json({ success, errors: errorobj.array() }); //valid xaina vane error cause hunu
     }
 
     try {
       //check if user already exists using email
       let user = await User.findOne({ email: req.body.email });
       if (user) {
-        return res.status(400).json({
+        return res.status(200).json({
           success,
           error: "Sorry a user with this email already exists",
         });
