@@ -49,9 +49,9 @@ const NoteTitles = ({
     >
       <div className="flex justify-between items-center space-x-4 text-xl mx-2 md:mx-4">
         <div className="pt-3 flex  items-center gap-2 flex-shrink-0">
-          <button onClick={toggleTitleSort} title="Sort by title">
+          {/* <button onClick={toggleTitleSort} title="Sort by title">
             {isTitleSortAsc ? <ArrowDownAZ /> : <ArrowUpAZ />}
-          </button>
+          </button> */}
           <div className="text-white cursor-default">Notes</div>
         </div>
         <div className="flex-1 min-w-0 items-end flex justify-end pt-[0.6rem]">
