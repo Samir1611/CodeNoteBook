@@ -11,7 +11,7 @@ const Noteapp = () => {
   const context = useContext(NoteContext);
   const { notes, getNotes } = context;
   const navigate = useNavigate();
-  const { authToken } = useAuth();
+  const { authToken, loading } = useAuth();
   const [ext, setExt] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clicknote, setclicknote] = useState("");
@@ -20,12 +20,12 @@ const Noteapp = () => {
   const [showMainContent, setShowMainContent] = useState(true); // initially true
 
   useEffect(() => {
-    if (!authToken) {
+    if (!loading && !authToken) {
       navigate("/login");
-    } else {
+    } else if (authToken) {
       getNotes();
     }
-  }, [authToken, navigate, getNotes]);
+  }, [authToken, loading, navigate, getNotes]);
 
   const clickedNote = (note) => setclicknote(note._id);
   const [currentFilter, setCurrentFilter] = useState("All Notes");

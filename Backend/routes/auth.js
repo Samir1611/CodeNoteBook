@@ -145,6 +145,7 @@ router.post(
           secure: true, // true in production (HTTPS)
           sameSite: "none", // CSRF protection
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+          domain: ".onrender.com",
         })
         .json({
           success: true,
@@ -153,7 +154,7 @@ router.post(
             id: user.id,
             name: user.name,
           },
-          authToken: token,
+          token: token,
         });
     } catch (error) {
       return res.status(500).json({
@@ -186,15 +187,14 @@ router.post("/logout", (req, res) => {
     .json({ success: true, message: "Logged out successfully" });
 });
 router.get("/me", fetchUser, async (req, res) => {
-  try {
-    if (!req.user) {
-      return res.json({ success: false });
-    }
-    const user = await User.findById(req.user.id).select("-password");
-    if (!user) return res.json({ success: false });
-    res.json({ success: true, user });
-  } catch (error) {
-    res.json({ success: false });
+  if (req.user) {
+    res.json({
+      success: true,
+      user: req.user,
+      token: req.cookies.token,
+    });
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
   }
 });
 

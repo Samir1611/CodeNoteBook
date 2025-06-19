@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const login = (userData) => {
-    setAuthToken("authenticated"); // Placeholder token
+    setAuthToken(token);
     setUser(userData);
     setLoading(false);
   };
@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }) => {
 
         const json = await res.json();
         if (json.success) {
+          setAuthToken(json.token);
           setUser(json.user);
         } else {
           setUser(null);

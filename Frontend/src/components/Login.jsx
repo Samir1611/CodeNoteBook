@@ -24,7 +24,7 @@ const Login = () => {
     setIsLoading(false);
 
     if (json.success) {
-      login(json.user);
+      login(json.token, json.user);
       toast.success("Login Successful!");
       navigate("/");
     } else {
