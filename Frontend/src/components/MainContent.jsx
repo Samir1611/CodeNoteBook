@@ -68,11 +68,11 @@ const MainContent = ({
     <div
       className={`${
         ext && window.innerWidth < 640 ? "hidden sm:block" : "block"
-      } flex-1 bg-gray-900 text-white pl-4 h-screen relative`}
+      } flex-1 bg-gray-900 text-white sm:pl-4 h-screen relative`}
     >
       {selectedNote ? (
         <>
-          <div className="max-w-2xl pt-6 relative cursor-default">
+          <div className="max-w-2xl pl-4 pt-6 relative cursor-default">
             <div className="text-sm sm:text-xl font-bold  sm:w-72 md:w-[22rem] lg:w-[80rem] scrollbar-hidden xl:w-full  max-w-full">
               <input
                 type="text"
@@ -96,7 +96,7 @@ const MainContent = ({
               {format(selectedNote.date)}{" "}
             </p>
           </div>
-          <div className="flex space-x-1 md:gap-3 items-center justify-start text-sm cursor-default px-1">
+          <div className="flex space-x-1 pl-4 md:gap-3 items-center justify-start text-sm cursor-default px-1">
             {/* <div className="flex items-center">
               <Inbox className="mr-[4px]" size={16} />
               Inbox

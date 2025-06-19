@@ -30,7 +30,7 @@ const Txts = memo(({ noteid, notetitle, notedescription, noteStatus }) => {
   };
 
   return (
-    <div className="flex space-x-2 p-4 bg-gray-900 text-white rounded-md">
+    <div className="flex space-x-2 p-2 sm:p-4 bg-gray-900 text-white rounded-md">
       <div
         ref={lineNumberRef}
         className="hidden md:block text-right pr-1 overflow-hidden scrollbar-hidden min-h-[76vh] sm:min-h-[76vh] xl:min-h-[80vh] max-h-0 overflow-y-auto"
