@@ -11,25 +11,31 @@ const NoteState = (props) => {
   //get all note
   const getNotes = async () => {
     //fetch
-    const response = await fetch(`${host}/notes/fetchallnotes`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.status === 401) {
-      console.error("Authentication failed");
-      return;
-    }
-    const json = await response.json();
-    // console.log(json);
-    // setNotes(json);
-    if (Array.isArray(json)) {
-      setNotes(json);
-    } else {
-      console.error("Invalid response (not an array):", json);
-      setNotes([]); // fallback to empty array
+    try {
+      const response = await fetch(`${host}/notes/fetchallnotes`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        console.error("Fetch failed:", response.status);
+        setNotes([]);
+        return;
+      }
+      const json = await response.json();
+      // console.log(json);
+      // setNotes(json);
+      if (Array.isArray(json)) {
+        setNotes(json);
+      } else {
+        console.error("Invalid response (not an array):", json);
+        setNotes([]); // fallback to empty array
+      }
+    } catch (err) {
+      console.error("Error while fetching notes:", err);
+      setNotes([]);
     }
   };
   //add note
