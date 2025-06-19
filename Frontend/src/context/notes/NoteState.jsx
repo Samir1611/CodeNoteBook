@@ -18,6 +18,10 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
       },
     });
+    if (response.status === 401) {
+      console.error("Authentication failed");
+      return;
+    }
     const json = await response.json();
     // console.log(json);
     // setNotes(json);
