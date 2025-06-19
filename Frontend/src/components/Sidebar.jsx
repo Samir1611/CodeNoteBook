@@ -116,9 +116,15 @@ const Sidebar = ({
 
     if (key === "Notebooks") {
       setIsModalOpen(true);
-    } else setIsModalOpen(false);
+      if (window.innerWidth < 640) {
+        setExt(false);
+      }
+    }
     if (window.innerWidth < 640 && !isChevronClick) {
       setExt(false);
+      if (key === "Status") {
+        setIsModalOpen(false);
+      }
     }
   };
   return (
@@ -140,7 +146,12 @@ const Sidebar = ({
         )}
         <button
           className="cursor-pointer text-white flex items-center gap-2"
-          onClick={() => setExt(!ext)}
+          onClick={() => {
+            setExt(!ext);
+            if (window.innerWidth < 640) {
+              setIsModalOpen(false);
+            }
+          }}
           // onMouseOut={() => setExt(!ext)}
         >
           <Menu className="h-[2rem]" />
@@ -171,6 +182,7 @@ const Sidebar = ({
                     }
                   } else if (f.title === "Notebooks") {
                     setIsModalOpen(true);
+                    toggleSelect(f.title);
                   } else if (f.title === "Status") {
                     toggleSelect(f.title, false);
                     setIsModalOpen(false);
