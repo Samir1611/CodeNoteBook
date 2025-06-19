@@ -197,7 +197,7 @@ router.get("/me", fetchUser, async (req, res) => {
       token: req.cookies.token,
     });
   } else {
-    res.json({ success: false, message: "Not logged in" });
+    res.status(200).json({ success: false, message: "Not logged in" });
   }
 });
 
