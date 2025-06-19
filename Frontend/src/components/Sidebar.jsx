@@ -25,6 +25,7 @@ const Sidebar = ({
   setIsModalOpen,
   setCurrentFilter,
   onAllNotesClick,
+  currentFilter,
 }) => {
   const obj = [
     {
@@ -127,6 +128,16 @@ const Sidebar = ({
       }
     }
   };
+  const isParentActive = (title) => {
+    if (title === "All Notes") return currentFilter === "All Notes";
+    if (title === "Status") return currentFilter.startsWith("Status:");
+    if (title === "Tags") return currentFilter.startsWith("Tag:");
+    return false;
+  };
+
+  const isChildActive = (parentTitle, childTitle) => {
+    return currentFilter === `${parentTitle}: ${childTitle}`;
+  };
   return (
     <div
       className={`inline-flex flex-col bg-[#2C3D5A] h-screen relative cursor-default ${
@@ -204,7 +215,13 @@ const Sidebar = ({
                   }
                 }}
               >
-                {f.icon}
+                <span
+                  className={`icon ${
+                    isParentActive(f.title) ? "text-yellow-400" : ""
+                  }`}
+                >
+                  {f.icon}
+                </span>{" "}
                 {ext && <span className="pl-2 text-sm">{f.title}</span>}
               </div>
               {ext && (
@@ -233,7 +250,11 @@ const Sidebar = ({
                   <li
                     key={sub.title}
                     onClick={() => handleItemClick(sub.title, f.title)}
-                    className="flex justify-between text-sm text-white py-1"
+                    className={`flex justify-between text-sm py-1 rounded px-2 ${
+                      isChildActive(f.title, sub.title)
+                        ? "bg-gray-700"
+                        : "hover:bg-gray-600"
+                    }`}
                   >
                     {/* {console.log(f.submenu)} */}
                     <span className="flex gap-2">

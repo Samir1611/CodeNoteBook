@@ -60,7 +60,7 @@ const NoteTitles = ({
           </div>
         </div>
       </div>
-      <div className="relative md:w-full mt-3 px-2 md:px-4 mb-[0.65rem]">
+      <div className="relative md:w-full mt-3 px-3 md:px-4 mb-[0.65rem]">
         <span className="absolute inset-y-0 left-6 flex items-center text-gray-400">
           <Search />
         </span>
@@ -92,13 +92,13 @@ const NoteTitles = ({
           {/* )} */}
         </div>
       )}
-      <div className="overflow-y-auto max-h-[80.7vh]  lg:max-h-[calc(100vh-170px)] scrollbar-hidden px-2 md:px-4 pr-1">
+      <div className="overflow-y-auto max-h-[80.7vh]  lg:max-h-[calc(100vh-170px)] scrollbar-hidden px-2  pr-1">
         {notes && sortedNotes.length > 0 ? (
           <div className="parerent">
             {sortedNotes.map((note) => (
               <div
                 key={note._id || note.title}
-                className="flex items-center px-4 hover:bg-slate-500 mb-2 p-2 rounded-lg w-full max-w-full  "
+                className="flex items-center  hover:bg-slate-500  p-2 rounded-lg w-full max-w-full  "
                 onClick={() => {
                   clickedNote(note);
                   setDrop(false);
@@ -108,10 +108,11 @@ const NoteTitles = ({
                   }
                 }}
               >
-                <div className="min-w-0">
-                  <h5 className="text-white truncate">
+                <div className="min-w-0 w-full  ">
+                  <h5 className="text-white truncate mb-2 cursor-default">
                     {note.title || "Untitled Note"}
                   </h5>
+                  <div className="border-b-2 border-[#41455d] w-full" />
                 </div>
               </div>
             ))}

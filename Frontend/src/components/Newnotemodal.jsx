@@ -58,13 +58,13 @@ const Newnotemodal = ({ isOpen, onClose }) => {
 
         <div className="mx-4 mt-4 flex justify-between">
           <button
-            className="text-white py-2 px-6 md:px-11 bg-black rounded-md"
+            className="text-white py-2 px-6 md:px-11 bg-slate-700  rounded-md"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
-            className={`text-white py-2 px-6 md:px-11 bg-slate-500 rounded-md ${
+            className={`text-white py-2 px-6 md:px-11  bg-[#002e7c] rounded-md ${
               note.title.length < 4 ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={handleClick}

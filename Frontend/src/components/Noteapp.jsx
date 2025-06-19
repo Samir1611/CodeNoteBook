@@ -81,6 +81,7 @@ const Noteapp = () => {
         ext={ext}
         setExt={setExt}
         setIsModalOpen={setIsModalOpen}
+        currentFilter={currentFilter}
         setCurrentFilter={setCurrentFilter}
         className="w-16 md:w-20 flex-shrink-0"
         onAllNotesClick={() => {
