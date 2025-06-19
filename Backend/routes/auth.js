@@ -197,7 +197,7 @@ router.get("/me", fetchUser, async (req, res) => {
       token: req.cookies.token,
     });
   } else {
-    res.status(401).json({ error: "Unauthorized" });
+    res.json({ success: false, message: "Not logged in" });
   }
 });
 
