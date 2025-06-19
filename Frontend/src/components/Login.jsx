@@ -20,15 +20,20 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const json = await apiPost("/auth/login", credentials);
-    setIsLoading(false);
+    try {
+      const json = await apiPost("/auth/login", credentials);
+      setIsLoading(false);
 
-    if (json.success) {
-      login(json.token, json.user);
-      toast.success("Login Successful!");
-      navigate("/");
-    } else {
-      toast.error(json.error || "Invalid credentials");
+      if (json.success) {
+        login(json.token, json.user);
+        toast.success("Login Successful!");
+        navigate("/");
+      } else {
+        toast.error(json.error || "Invalid credentials");
+      }
+    } catch (err) {
+      setIsLoading(false);
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
