@@ -108,7 +108,7 @@ const Sidebar = ({
     onAllNotesClick && onAllNotesClick();
   };
   const [select, setSelect] = useState({ Status: false, Tags: false });
-  const toggleSelect = (key) => {
+  const toggleSelect = (key, isChevronClick = false) => {
     setSelect((prevSelect) => ({
       ...prevSelect,
       [key]: !prevSelect[key],
@@ -117,7 +117,7 @@ const Sidebar = ({
     if (key === "Notebooks") {
       setIsModalOpen(true);
     } else setIsModalOpen(false);
-    if (window.innerWidth < 640) {
+    if (window.innerWidth < 640 && !isChevronClick) {
       setExt(false);
     }
   };
@@ -172,7 +172,7 @@ const Sidebar = ({
                   } else if (f.title === "Notebooks") {
                     setIsModalOpen(true);
                   } else if (f.title === "Status") {
-                    toggleSelect(f.title);
+                    toggleSelect(f.title, false);
                     setIsModalOpen(false);
 
                     onAllNotesClick && onAllNotesClick();
@@ -181,7 +181,7 @@ const Sidebar = ({
                     }
                     setExt(true);
                   } else if (f.title === "Tags") {
-                    toggleSelect(f.title);
+                    toggleSelect(f.title, false);
                     setIsModalOpen(false);
 
                     onAllNotesClick && onAllNotesClick();
@@ -198,7 +198,10 @@ const Sidebar = ({
               {ext && (
                 <a
                   className="place-content-center cursor-pointer"
-                  onClick={() => toggleSelect(f.title)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleSelect(f.title, true);
+                  }}
                 >
                   {f.sideitems === "chevron" ? (
                     select[f.title] ? (
