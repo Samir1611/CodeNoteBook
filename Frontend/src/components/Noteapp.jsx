@@ -57,6 +57,19 @@ const Noteapp = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+
+      if (width >= 1024) {
+        window.location.reload();
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const filteredNotes = filterNotes();
 
   return (

@@ -1,6 +1,6 @@
 // Inbox.js
 import { ArrowDownAZ, ArrowUpAZ, Filter, Search } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Newnotemodal from "./Newnotemodal";
 
 const NoteTitles = ({
@@ -40,6 +40,22 @@ const NoteTitles = ({
       return isDateSortAsc ? dateA - dateB : dateB - dateA;
     }
   });
+  const modalRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setIsModalOpen(false);
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isModalOpen]);
 
   return (
     <div
@@ -94,33 +110,47 @@ const NoteTitles = ({
       )}
       <div className="overflow-y-auto max-h-[80.7vh]  lg:max-h-[calc(100vh-170px)] scrollbar-hidden px-2 md:px-4 pr-1">
         {notes && sortedNotes.length > 0 ? (
-          sortedNotes.map((note) => (
-            <div
-              key={note._id || note.title}
-              className="flex items-center px-4 hover:bg-slate-500 mb-2 p-2 rounded-lg w-full max-w-full  "
-              onClick={() => {
-                clickedNote(note);
-                setDrop(false);
-                if (window.innerWidth < 1024) {
-                  setShowMainContent(true);
-                  setShowNoteTitles(false);
-                }
-              }}
-            >
-              <div className="min-w-0">
-                <h5 className="text-white truncate">
-                  {note.title || "Untitled Note"}
-                </h5>
+          <div className="parerent">
+            {sortedNotes.map((note) => (
+              <div
+                key={note._id || note.title}
+                className="flex items-center px-4 hover:bg-slate-500 mb-2 p-2 rounded-lg w-full max-w-full  "
+                onClick={() => {
+                  clickedNote(note);
+                  setDrop(false);
+                  if (window.innerWidth < 1024) {
+                    setShowMainContent(true);
+                    setShowNoteTitles(false);
+                  }
+                }}
+              >
+                <div className="min-w-0">
+                  <h5 className="text-white truncate">
+                    {note.title || "Untitled Note"}
+                  </h5>
+                </div>
               </div>
+            ))}
+            <div
+              ref={modalRef}
+              className=" fixed z-40 right-[78vw]  top-[50vh] sm:right-[60vw] "
+            >
+              <Newnotemodal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+              />
             </div>
-          ))
+          </div>
         ) : (
           <>
             <div className="flex flex-col items-center justify-center h-full">
               <div className="text-white">No notes</div>
               <div className="opacity-40 text-white mt-2">Add a new note.</div>
 
-              <div className=" fixed z-40 right-[78vw]  top-[50vh] sm:right-[60vw] ">
+              <div
+                ref={modalRef}
+                className=" fixed z-40 right-[78vw]  top-[50vh] sm:right-[60vw] "
+              >
                 <Newnotemodal
                   isOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}

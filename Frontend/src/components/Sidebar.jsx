@@ -124,7 +124,16 @@ const Sidebar = ({
       } sm:w-auto`}
     >
       <div className="flex items-center justify-between gap-9 py-2 px-3 sm:px-4">
-        {ext && <span className="logo text-md text-white">CodeNotebook</span>}
+        {ext && (
+          <span
+            onClick={() => {
+              window.location.reload();
+            }}
+            className="logo text-md text-white"
+          >
+            CodeNotebook
+          </span>
+        )}
         <button
           className="cursor-pointer text-white flex items-center gap-2"
           onClick={() => setExt(!ext)}
